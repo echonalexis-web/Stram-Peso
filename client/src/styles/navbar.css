@@ -1,0 +1,320 @@
+.navbar {
+  background: url('../assets/images/navbar-bg.png') center center no-repeat;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 0.75rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 5px solid #f0e809; /* Keep yellow design */
+  min-height: 75px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Ensure the background image stays visible on all devices */
+.navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* Dark overlay for better text visibility */
+  z-index: 0;
+}
+
+.navbar > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1200px) {
+  .navbar {
+    background-size: cover;
+    padding: 0.75rem 2rem;
+    min-height: 75px;
+  }
+}
+
+/* Medium screens (tablets, laptops) */
+@media (max-width: 1024px) {
+  .navbar {
+    background-size: cover;
+    background-position: center;
+    padding: 0.65rem 1rem;
+    min-height: 70px;
+  }
+}
+
+/* Tablets and small laptops */
+@media (max-width: 768px) {
+  .navbar {
+    background-size: cover;
+    background-position: center;
+    padding: 0.5rem 0.75rem;
+    min-height: auto;
+    border-bottom-width: 3px;
+  }
+  
+  .navbar::before {
+    background: rgba(0, 0, 0, 0.4); /* Slightly darker on mobile for readability */
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .navbar {
+    background-size: cover;
+    background-position: center;
+    padding: 0.5rem 0.5rem;
+    border-bottom-width: 3px;
+  }
+  
+  .navbar::before {
+    background: rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 380px) {
+  .navbar {
+    padding: 0.4rem 0.4rem;
+  }
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo Section */
+.nav-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  min-width: fit-content;
+  transition: transform 0.2s ease;
+}
+
+.nav-logo-section:hover {
+  transform: scale(1.02);
+}
+
+.nav-logo-icon {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nav-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nav-logo-text {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-links a,
+.nav-links button {
+  color: #ffffff;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.nav-links a:hover,
+.nav-links button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  backdrop-filter: blur(4px);
+}
+
+.nav-links a:active,
+.nav-links button:active {
+  transform: translateY(0);
+}
+
+.user-name {
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  white-space: nowrap;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.logout-btn {
+  cursor: pointer;
+  background: rgba(220, 53, 69, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logout-btn:hover {
+  background: rgba(220, 53, 69, 0.35);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.employee-register-link {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Tablet Responsive */
+@media (max-width: 768px) {
+  .nav-logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-logo-text {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .user-name {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+/* Mobile Responsive - Collapsed view */
+@media (max-width: 480px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .nav-logo-section {
+    justify-content: center;
+  }
+
+  .nav-logo-text {
+    font-size: 0.95rem;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .user-name {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .nav-links {
+    gap: 0.3rem;
+  }
+  
+  .nav-links a,
+  .nav-links button {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.4rem;
+  }
+  
+  .user-name {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.4rem;
+  }
+  
+  .nav-logo-text {
+    font-size: 0.85rem;
+  }
+  
+  .nav-logo-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .navbar {
+    padding: 0.4rem 0.75rem;
+  }
+  
+  .nav-container {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  
+  .nav-logo-text {
+    font-size: 0.9rem;
+  }
+  
+  .nav-links a,
+  .nav-links button {
+    padding: 0.3rem 0.5rem;
+  }
+}
