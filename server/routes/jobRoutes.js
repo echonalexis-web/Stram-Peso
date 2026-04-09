@@ -9,6 +9,8 @@ const {
   updateJob,
   deleteJob,
   applyToJob,
+  updateMyApplication,
+  deleteMyApplication,
   getApplicationsForJob,
   getMyApplications,
   getEmployerJobs,
@@ -41,6 +43,8 @@ const upload = multer({
 router.get("/", verifyToken, getJobs);
 router.get("/mine", verifyToken, isEmployer, getEmployerJobs);
 router.get("/applications/me", verifyToken, isResident, getMyApplications);
+router.put("/applications/:id", verifyToken, isResident, upload.single("resume"), updateMyApplication);
+router.delete("/applications/:id", verifyToken, isResident, deleteMyApplication);
 router.post("/", verifyToken, isEmployer, createJob);
 router.post("/:id/apply", verifyToken, isResident, upload.single("resume"), applyToJob);
 router.get("/:id/applications", verifyToken, getApplicationsForJob);

@@ -25,7 +25,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = /pdf|doc|docx/;
+    const allowedTypes = /pdf|doc|docx|jpeg|jpg|png/;
     cb(null, allowedTypes.test(file.mimetype));
   }
 });
@@ -33,7 +33,15 @@ const upload = multer({
 router.post("/register", register);
 router.post("/login", login);
 router.get("/me", verifyToken, getMe);
-router.patch("/me", verifyToken, upload.single("resume"), updateProfile);
+router.patch(
+  "/me",
+  verifyToken,
+  upload.fields([
+    { name: "resume", maxCount: 1 },
+    { name: "supportingDocument", maxCount: 1 },
+  ]),
+  updateProfile
+);
 
 router.post("/register/employer", registerEmployer);
 router.post("/invite", verifyToken, isAdmin, generateInviteCode);

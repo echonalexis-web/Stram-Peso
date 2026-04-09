@@ -64,13 +64,49 @@ exports.getMe = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
+    if (req.body.email) {
+      const existing = await User.findOne({ email: req.body.email, _id: { $ne: req.user.id } });
+      if (existing) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+    }
+
+    let parsedSkills = [];
+    if (req.body.skills) {
+      try {
+        parsedSkills = JSON.parse(req.body.skills);
+        if (!Array.isArray(parsedSkills)) {
+          parsedSkills = [];
+        }
+      } catch (e) {
+        parsedSkills = String(req.body.skills)
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+    }
+
     const updates = {
       name: req.body.name,
+      email: req.body.email,
       about: req.body.about,
+      phone: req.body.phone,
+      address: req.body.address,
+      dateOfBirth: req.body.dateOfBirth || null,
+      gender: req.body.gender,
+      desiredJobTitle: req.body.desiredJobTitle,
+      skills: parsedSkills,
+      workExperience: req.body.workExperience,
+      educationalAttainment: req.body.educationalAttainment,
+      availabilityStatus: req.body.availabilityStatus,
     };
 
-    if (req.file) {
-      updates.resume = `uploads/${req.file.filename}`;
+    if (req.files?.resume?.[0]) {
+      updates.resume = `uploads/${req.files.resume[0].filename}`;
+    }
+
+    if (req.files?.supportingDocument?.[0]) {
+      updates.supportingDocument = `uploads/${req.files.supportingDocument[0].filename}`;
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, updates, {

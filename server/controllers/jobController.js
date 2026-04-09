@@ -141,6 +141,55 @@ exports.getMyApplications = async (req, res) => {
   }
 };
 
+exports.updateMyApplication = async (req, res) => {
+  try {
+    const application = await JobApplication.findById(req.params.id);
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    if (application.applicant.toString() !== req.user.id) {
+      return res.status(403).json({ message: "You can only update your own applications" });
+    }
+
+    if (typeof req.body.coverLetter === "string") {
+      application.coverLetter = req.body.coverLetter;
+    }
+
+    if (req.file) {
+      application.resume = `uploads/${req.file.filename}`;
+    }
+
+    await application.save();
+
+    const populated = await JobApplication.findById(application._id)
+      .populate("vacancy", "title location employer")
+      .populate("vacancy.employer", "name email");
+
+    res.json({ message: "Application updated successfully", application: populated });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.deleteMyApplication = async (req, res) => {
+  try {
+    const application = await JobApplication.findById(req.params.id);
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    if (application.applicant.toString() !== req.user.id) {
+      return res.status(403).json({ message: "You can only delete your own applications" });
+    }
+
+    await JobApplication.findByIdAndDelete(application._id);
+    res.json({ message: "Application withdrawn successfully", id: application._id });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.getEmployerJobs = async (req, res) => {
   try {
     const jobs = await JobVacancy.find({ employer: req.user.id }).sort({ createdAt: -1 });

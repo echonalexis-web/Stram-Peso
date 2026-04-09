@@ -40,6 +40,8 @@ export const jobAPI = {
   getEmployerJobs: () => axios.get(`${API_URL}/jobs/mine`, getAuthHeader()),
   getApplicationsForJob: (id) => axios.get(`${API_URL}/jobs/${id}/applications`, getAuthHeader()),
   getMyApplications: () => axios.get(`${API_URL}/jobs/applications/me`, getAuthHeader()),
+  updateApplication: (id, data) => axios.put(`${API_URL}/jobs/applications/${id}`, data, getAuthFormHeader()),
+  deleteApplication: (id) => axios.delete(`${API_URL}/jobs/applications/${id}`, getAuthHeader()),
 };
 
 export const adminAPI = {
