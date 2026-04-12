@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://stram-peso.onrender.com/api/v1";
+export const API_URL = "https://stram-peso.onrender.com/api/v1";
 
 const getAuthHeader = () => {
   const token = localStorage.getItem("token");
