@@ -10,6 +10,19 @@ const connectDB = require("./config/db");
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = (process.env.CLIENT_ORIGINS || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowVercelPreviews = process.env.ALLOW_VERCEL_PREVIEWS === "true";
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  return allowVercelPreviews && origin.endsWith(".vercel.app");
+};
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -36,8 +49,20 @@ const upload = multer({
 
 (async () => {
   await connectDB();
-  
-  app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (isOriginAllowed(origin)) {
+          callback(null, true);
+          return;
+        }
+
+        callback(new Error("CORS blocked for this origin"));
+      },
+      credentials: true,
+    })
+  );
   app.use(express.json());
   app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -66,7 +91,7 @@ const upload = multer({
 
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: allowedOrigins,
       credentials: true,
     },
   });
