@@ -33,14 +33,20 @@ export default function Register() {
     setError("");
 
     try {
-      const registerResponse = await authAPI.register(formData);
+      const normalizedEmail = formData.email.trim().toLowerCase();
+
+      const registerResponse = await authAPI.register({
+        ...formData,
+        name: formData.name.trim(),
+        email: normalizedEmail,
+      });
       const registeredHasCompletedOnboarding =
         typeof registerResponse.data?.hasCompletedOnboarding === "boolean"
           ? registerResponse.data.hasCompletedOnboarding
           : registerResponse.data?.onboardingComplete;
 
       const { data: loginResponse } = await authAPI.login({
-        email: formData.email,
+        email: normalizedEmail,
         password: formData.password,
       });
 
@@ -66,7 +72,7 @@ export default function Register() {
         navigate(getDefaultRouteByRole(mergedUser?.role));
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.response?.data?.message || err.message || "Registration failed");
     } finally {
       setLoading(false);
     }

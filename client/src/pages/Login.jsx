@@ -35,7 +35,12 @@ export default function Login() {
     setError("");
 
     try {
-      const { data } = await authAPI.login(formData);
+      const loginPayload = {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+      };
+
+      const { data } = await authAPI.login(loginPayload);
       login(data.token, data.user);
 
       const profileResponse = await authAPI.getProfile();
@@ -59,7 +64,7 @@ export default function Login() {
 
       navigate(getDefaultRouteByRole(mergedUser?.role));
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response?.data?.message || err.message || "Login failed");
     } finally {
       setLoading(false);
     }
