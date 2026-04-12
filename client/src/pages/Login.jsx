@@ -48,6 +48,7 @@ export default function Login() {
   };
 
   const handleChange = (e) => {
+    if (error) setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -101,6 +102,12 @@ export default function Login() {
       <div className="auth-card">
         <h2>Login</h2>
         <p className="auth-subtitle">Access your account to view jobs and manage applications.</p>
+
+        {error && (
+          <p className="error-message" role="alert" aria-live="polite">
+            {error}
+          </p>
+        )}
 
 
         <form className="auth-form" onSubmit={handleSubmit}>
