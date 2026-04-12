@@ -102,7 +102,6 @@ export default function Login() {
         <h2>Login</h2>
         <p className="auth-subtitle">Access your account to view jobs and manage applications.</p>
 
-        {error && <p className="error-message">{error}</p>}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
