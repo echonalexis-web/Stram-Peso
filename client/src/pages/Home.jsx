@@ -1,11 +1,27 @@
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../styles/home.css";
 import heroVideo from "../assets/videos/hero-video.mp4";
 import pesoLogo from "../assets/images/peso-logo.png";
 
 export default function Home() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [showRegisterPrompt, setShowRegisterPrompt] = useState(false);
 
+  const openRegisterPrompt = () => {
+    setShowRegisterPrompt(true);
+  };
+
+  const closeRegisterPrompt = () => {
+    setShowRegisterPrompt(false);
+  };
+
+  const goToRegister = (route) => {
+    closeRegisterPrompt();
+    navigate(route);
+  };
 
   return (
     <div className="home-container">
@@ -39,10 +55,57 @@ export default function Home() {
               Marinduque, proudly known as the Heart of the Philippines, is a province rich in culture, resilience, and community spirit. Through Online Employment in Marinduque, we connect local talent with opportunities, empowering every Marinduqueño to build a stronger future at home and beyond
             </p>
           </div>
+
+          {!user && (
+            <div className="hero-mobile-quick-actions">
+              <button
+                type="button"
+                className="hero-mobile-btn hero-mobile-login-btn"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className="hero-mobile-btn hero-mobile-register-btn"
+                onClick={openRegisterPrompt}
+              >
+                Register
+              </button>
+            </div>
+          )}
           
 
         </div>
       </section>
+
+      {showRegisterPrompt && (
+        <div className="register-choice-overlay" onClick={closeRegisterPrompt}>
+          <div className="register-choice-modal" onClick={(event) => event.stopPropagation()}>
+            <h3>Register as</h3>
+            <p>Select your account type to continue.</p>
+            <div className="register-choice-actions">
+              <button
+                type="button"
+                className="register-choice-btn"
+                onClick={() => goToRegister("/register")}
+              >
+                Resident / Jobseeker
+              </button>
+              <button
+                type="button"
+                className="register-choice-btn"
+                onClick={() => goToRegister("/register-employer")}
+              >
+                Employer
+              </button>
+            </div>
+            <button type="button" className="register-choice-cancel" onClick={closeRegisterPrompt}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       <section className="features-section">
         <h2>Find Work or Hire Talent</h2>
