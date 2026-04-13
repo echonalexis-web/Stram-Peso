@@ -295,53 +295,55 @@ export default function EmployerDashboard() {
                   <div className="table-card-header">
                     <h2>Recent Applicants</h2>
                   </div>
-                  <table className="employer-table">
-                    <thead>
-                      <tr>
-                        <th>Applicant Name</th>
-                        <th>Applied For</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {!recentApplicants.length ? (
+                  <div className="table-scroll-wrap">
+                    <table className="employer-table">
+                      <thead>
                         <tr>
-                          <td colSpan="5" className="empty-cell">No recent applicants yet.</td>
+                          <th>Applicant Name</th>
+                          <th>Applied For</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Action</th>
                         </tr>
-                      ) : (
-                        recentApplicants.map((application) => (
-                          <tr key={application._id}>
-                            <td>{application.applicant?.name || "Unknown Applicant"}</td>
-                            <td>{application.vacancy?.title || "Unknown Job"}</td>
-                            <td>{formatDate(application.createdAt || application.appliedAt)}</td>
-                            <td>
-                              <span className={`status-pill ${statusClass(application.status)}`}>
-                                {normalizeApplicationStatus(application.status)}
-                              </span>
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="text-action-btn"
-                                onClick={() => openApplicantDrawer(application)}
-                              >
-                                View
-                              </button>
-                              <button
-                                type="button"
-                                className="text-action-btn"
-                                onClick={() => handleMessageApplicant(application.applicant?._id)}
-                              >
-                                Message
-                              </button>
-                            </td>
+                      </thead>
+                      <tbody>
+                        {!recentApplicants.length ? (
+                          <tr>
+                            <td colSpan="5" className="empty-cell">No recent applicants yet.</td>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                        ) : (
+                          recentApplicants.map((application) => (
+                            <tr key={application._id}>
+                              <td>{application.applicant?.name || "Unknown Applicant"}</td>
+                              <td>{application.vacancy?.title || "Unknown Job"}</td>
+                              <td>{formatDate(application.createdAt || application.appliedAt)}</td>
+                              <td>
+                                <span className={`status-pill ${statusClass(application.status)}`}>
+                                  {normalizeApplicationStatus(application.status)}
+                                </span>
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="text-action-btn"
+                                  onClick={() => openApplicantDrawer(application)}
+                                >
+                                  View
+                                </button>
+                                <button
+                                  type="button"
+                                  className="text-action-btn"
+                                  onClick={() => handleMessageApplicant(application.applicant?._id)}
+                                >
+                                  Message
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             )}

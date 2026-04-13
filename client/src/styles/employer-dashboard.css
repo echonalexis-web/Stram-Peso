@@ -104,6 +104,12 @@
   padding: 16px;
 }
 
+.table-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .table-card-header {
   display: flex;
   align-items: center;
@@ -121,6 +127,7 @@
 .employer-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 680px;
 }
 
 .employer-table th,
@@ -535,5 +542,24 @@
 
   .job-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .table-card {
+    padding: 12px;
+  }
+
+  .employer-table {
+    min-width: 620px;
+  }
+
+  .employer-table th,
+  .employer-table td {
+    padding: 0.56rem 0.44rem;
+    font-size: 0.82rem;
+  }
+
+  .text-action-btn {
+    padding: 0.42rem 0.62rem;
+    font-size: 0.78rem;
   }
 }
