@@ -223,6 +223,46 @@
   background: #f8fafc;
 }
 
+.messages-thread-content {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-mobile-tabs {
+  display: none;
+}
+
+.messages-mobile-universal-search {
+  display: none;
+}
+
+.messages-mobile-search-results,
+.messages-mobile-conversation-list {
+  margin-top: 0.55rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: auto;
+  max-height: 40vh;
+}
+
+.messages-mobile-search-section + .messages-mobile-search-section {
+  border-top: 1px solid #e5e7eb;
+}
+
+.messages-mobile-search-title {
+  margin: 0;
+  padding: 0.58rem 0.72rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  background: #f8fafc;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .messages-thread-empty {
   height: 100%;
   display: flex;
@@ -423,7 +463,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .messages-page {
     margin-top: 108px;
     height: calc(100vh - 108px);
@@ -435,5 +475,73 @@
 
   .messages-sidebar {
     display: none;
+  }
+
+  .messages-mobile-tabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+
+  .messages-mobile-tab-btn {
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.38rem 0.78rem;
+  }
+
+  .messages-mobile-tab-btn.active {
+    background: #16a34a;
+    color: #ffffff;
+    border-color: #16a34a;
+  }
+
+  .messages-mobile-tab-panel.inactive {
+    display: none;
+  }
+
+  .messages-mobile-tab-panel.active {
+    display: block;
+  }
+
+  .messages-thread-content.messages-mobile-tab-panel.active {
+    display: flex;
+  }
+
+  .messages-mobile-universal-search {
+    display: block;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+
+  .messages-mobile-universal-search input {
+    width: 100%;
+    max-width: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 0.62rem 0.88rem;
+    font-size: 0.88rem;
+    background: #ffffff;
+    color: #1e293b;
+  }
+
+  .messages-mobile-universal-search input:focus {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+  }
+
+  .messages-mobile-conversation-list .conversation-item {
+    border-radius: 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .messages-mobile-conversation-list .conversation-item:last-of-type {
+    border-bottom: none;
   }
 }
