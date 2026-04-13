@@ -6,7 +6,8 @@
   "scripts": {
     "install:client": "npm --prefix client install --include=dev",
     "build": "npm run install:client && npm --prefix client run build",
-    "preview": "npm --prefix client run preview"
+    "preview": "npm --prefix client run preview",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "axios": "^1.13.6",
@@ -17,5 +18,8 @@
   },
   "devDependencies": {
     "vite": "^8.0.8"
+  },
+  "jest":{
+    "testEnvironment": "node"
   }
 }
